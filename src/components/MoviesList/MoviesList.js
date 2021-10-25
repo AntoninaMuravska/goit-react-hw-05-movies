@@ -4,9 +4,7 @@ import s from './MoviesList.module.css';
 import PropTypes from 'prop-types';
 
 const MoviesList = ({ movies }) => {
-  const { url } = useRouteMatch();
   const location = useLocation();
-  // console.log('location', location);
 
   return (
     <ul className={s.list}>
@@ -15,7 +13,7 @@ const MoviesList = ({ movies }) => {
           <Link
             className={s.link}
             to={{
-              pathname: `${url}/${id}`,
+              pathname: `movies/${id}`,
               state: { from: location },
             }}
           >
