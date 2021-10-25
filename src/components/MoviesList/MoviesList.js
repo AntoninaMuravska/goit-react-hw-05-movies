@@ -1,14 +1,24 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useRouteMatch } from 'react-router-dom';
 import MoviePreview from '../MoviePreview';
 import s from './MoviesList.module.css';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 const MoviesList = ({ movies }) => {
+  const { url } = useRouteMatch();
+  const location = useLocation();
+  // console.log('location', location);
+
   return (
     <ul className={s.list}>
       {movies.map(({ id, title, backdrop_path }) => (
         <li key={id} className={s.item}>
-          <Link className={s.link} to={''}>
+          <Link
+            className={s.link}
+            to={{
+              pathname: `${url}/${id}`,
+              state: { from: location },
+            }}
+          >
             <MoviePreview id={id} title={title} backdrop_path={backdrop_path} />
           </Link>
         </li>
@@ -17,13 +27,13 @@ const MoviesList = ({ movies }) => {
   );
 };
 
-// MoviesList.propTypes = {
-//   movies: PropTypes.arrayOf(
-//     PropTypes.shape({
-//       id: PropTypes.number.isRequired,
-//       title: PropTypes.string.isRequired,
-//     }),
-//   ),
-// };
+MoviesList.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+    }),
+  ),
+};
 
 export default MoviesList;
